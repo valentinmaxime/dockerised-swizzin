@@ -151,6 +151,7 @@ Example `joal-config.json`:
 
 ### Planned Enhancements
 - **Settings**: Add some Joal Settings in configurable env variables.
+- **docker**: Change ubuntu to debian.
 - **SSL Integration**: Automate HTTPS setup using Let's Encrypt or other SSL providers.
 - **Improved Documentation**: Provide more detailed usage examples and FAQs.
 - **Multi-User Support**: Enhance Swizzin configuration to better support multiple users with isolated environments.
