@@ -111,7 +111,7 @@ This will:
 ### 4. Access the Services
 
 - **Swizzin Web Panel**: [http://your-server-ip](http://your-server-ip)
-![image](swizzin.png)
+![image](swizzin.PNG)
 - **Joal Web UI**: [http://your-server-ip/OP/ui:8003](http://your-server-ip/OP/ui:8003)
 **To configure joal ui, click on `change connection settings` button and click on save.**
 ![image](joal_conf.PNG)
