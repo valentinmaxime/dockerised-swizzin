@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  swizzin:
+    image: swizzin
+    privileged: true
+    ports:
+      - "2222:22"
+      - "80:80"
+      - "443:443"
+      - "8888:8888"
+      - "10961:10961"
+    container_name: debian_ssh_container
+    volumes:
+      - ./data/torrents:/home/seedbox/torrents # Persist seedbox home directory
+    restart: unless-stopped
+  joal:
+    image: anthonyraymond/joal
+    container_name: joal
+    restart: unless-stopped
+    depends_on:
+      - swizzin
+    volumes:
+      - ./joal:/data
+    ports:
+      - 8003:8003
+    command: ["--joal-conf=/data", "--spring.main.web-environment=true", "--server.port=8003", "--joal.ui.path.prefix=OP", "--joal.ui.secret-token=SC"]
