@@ -31,9 +31,6 @@ see docs : https://swizzin.ltd/getting-started
 ## Project Structure
 ```
 └── 📁seedbox
-    └── 📁data
-        └── 📁torrents
-            ├── deluge
     └── 📁joal
         └── 📁clients
         └── 📁torrents
