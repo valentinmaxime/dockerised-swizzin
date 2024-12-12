@@ -187,7 +187,7 @@ You can customize Resilio Sync by editing the `./data/sync` directory and config
 
 ### Planned Enhancements
 
-- **Settings**: Add some Joal settings in configurable env variables.
+- [ ] **Settings**: Add some Joal settings in configurable env variables.
 - [x] **Network**: Add VPN integration.
 - [x] **Docker**: Change Ubuntu to Debian.
 - [ ] **SSL Integration**: Automate HTTPS setup using Let's Encrypt or other SSL providers.
