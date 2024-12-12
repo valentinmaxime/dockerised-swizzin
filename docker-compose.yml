@@ -31,7 +31,7 @@ services:
     privileged: true
     network_mode: service:vpn
     volumes:
-      - ./data/downloads:/home/seedbox/transmission/downloads # Persist seedbox directory
+      - ./data/downloads:/home/seedbox/transmission/downloads
       - ./data/torrents:/home/seedbox/transmission/watch
   joal:
     image: anthonyraymond/joal

@@ -83,7 +83,8 @@ Edit the `docker-compose.yml` to set up necessary configurations for Swizzin (ch
 
 ```yml
 volumes:
-  - ./data/torrents:/home/seedbox/torrents # Persist seedbox directory
+  - ./data/downloads:/home/seedbox/transmission/downloads
+  - ./data/torrents:/home/seedbox/transmission/watch
 ```
 
 Edit the `docker-compose.yml` to set up necessary configurations for Joal (prefix and secret token):
