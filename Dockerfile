@@ -1,13 +1,18 @@
-FROM ubuntu:20.04
+FROM debian:bullseye
+
+ENV TERM=xterm
+ENV SEEDBOX_USER="seedbox"
+ENV SEEDBOX_PASS="test_password"
+
 
 RUN ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
     echo "Etc/UTC" > /etc/timezone
 
-# Met à jour les paquets et installe systemd, SSH, et autres outils nécessaires
 RUN apt-get update && \
     apt-get install -y \
     locales \
     systemd \
+    systemd-sysv \
     sudo \
     git \
     curl \
@@ -17,17 +22,18 @@ RUN apt-get update && \
     apt-transport-https \
     openssh-server && \
     apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     mkdir /var/run/sshd
 
 # Configure systemd
 ENV container docker
 STOPSIGNAL SIGRTMIN+3
 
-# Expose les ports nécessaires
+# Expose necessary ports
 EXPOSE 1-65535
 
-COPY startup.sh /usr/local/bin/startup.sh
-RUN chmod +x /usr/local/bin/startup.sh
+
+RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr lidarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
 
 # Activer systemd comme PID 1
-CMD ["/usr/local/bin/startup.sh"]
+CMD ["/lib/systemd/systemd"]

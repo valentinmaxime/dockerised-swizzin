@@ -1,27 +1,60 @@
 version: '3.8'
 
 services:
+  vpn:
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=private internet access
+      - OPENVPN_USER=xxx
+      - OPENVPN_PASSWORD=xxx
+      - SERVER_REGIONS=DE Berlin
+      - PORT_FORWARD_ONLY=true
+      - VPN_PORT_FORWARDING=on
+      - VPN_PORT_FORWARDING_PROVIDER="private internet access"
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
+      - HTTPPROXY=on
+    networks:
+      - mynetwork
+    ports:
+      - "8003:8003" # Joal port
+      - "2222:22" # ssh port
+      - "80:80" # swizzin port
+      - "443:443" # https port
   swizzin:
     image: swizzin
-    privileged: true
-    ports:
-      - "2222:22"
-      - "80:80"
-      - "443:443"
-      - "8888:8888"
-      - "10961:10961"
     container_name: debian_ssh_container
-    volumes:
-      - ./data/torrents:/home/seedbox/torrents # Persist seedbox home directory
     restart: unless-stopped
+    privileged: true
+    network_mode: service:vpn
+    volumes:
+      - ./data/downloads:/home/seedbox/transmission/downloads # Persist seedbox directory
+      - ./data/torrents:/home/seedbox/transmission/watch
   joal:
     image: anthonyraymond/joal
     container_name: joal
     restart: unless-stopped
-    depends_on:
-      - swizzin
     volumes:
       - ./joal:/data
-    ports:
-      - 8003:8003
     command: ["--joal-conf=/data", "--spring.main.web-environment=true", "--server.port=8003", "--joal.ui.path.prefix=OP", "--joal.ui.secret-token=SC"]
+    network_mode: service:vpn
+  resilio-sync:
+    image: lscr.io/linuxserver/resilio-sync:latest
+    container_name: resilio-sync
+    ports:
+      - "8888:8888" # resilio ui port
+      - "55555:55555" # resilio port
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./rdownloads:/downloads
+      - ./rdata:/sync
+    restart: unless-stopped
+networks:
+  mynetwork:
+    driver: bridge
