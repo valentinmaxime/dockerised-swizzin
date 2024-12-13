@@ -1,9 +1,13 @@
 FROM debian:bullseye
 
-ENV TERM=xterm
-ENV SEEDBOX_USER="seedbox"
-ENV SEEDBOX_PASS="test_password"
 
+ARG TERM
+ARG SEEDBOX_USER
+ARG SEEDBOX_PASS
+
+ENV TERM=${TERM}
+ENV SEEDBOX_USER=${SEEDBOX_USER}
+ENV SEEDBOX_PASS=${SEEDBOX_PASS}
 
 RUN ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
     echo "Etc/UTC" > /etc/timezone
@@ -32,8 +36,11 @@ STOPSIGNAL SIGRTMIN+3
 # Expose necessary ports
 EXPOSE 1-65535
 
+# Incomplete folder for transmission
+ENV incomplete_dir_enabled=true
+ENV watch_dir_enabled=true
 
 RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr lidarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
 
-# Activer systemd comme PID 1
+# Activate systemd as PID 1
 CMD ["/lib/systemd/systemd"]

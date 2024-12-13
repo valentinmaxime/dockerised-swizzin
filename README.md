@@ -43,6 +43,7 @@ See docs: [https://swizzin.ltd/getting-started](https://swizzin.ltd/getting-star
         └── 📁clients
         └── 📁torrents
         └── config.json
+    └── .env
     └── docker-compose.yml
     └── Dockerfile
     └── README.md
@@ -62,15 +63,19 @@ cd docker-swizzin-joal
 ### 2. Configure Environment Variables and Docker
 
 #### Swizzin Configuration
-Edit the `Dockerfile` to set up necessary configurations for Swizzin:
+Edit the `.env` file to set up necessary configurations for docker compose:
 
 ```bash
-# Swizzin Settings
-ENV SEEDBOX_USER="seedbox"
-ENV SEEDBOX_PASS="test_password"
+TERM=xterm                 # Activate interactive mode for further updates
+SEEDBOX_USER=seedbox       # Swizzin user
+SEEDBOX_PASS=test_password # Swizzin password
+OPENVPN_USER=pXXXXXX       # VPN user
+OPENVPN_PASSWORD=password  # VPN password
+JOAL_PREFIX=OP             # Joal setting
+JOAL_SECRET=SC             # Joal setting
 ```
 
-Change the package list as you want:
+Change the package list as you want in `Dockerfile`:
 
 ```bash
 RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr lidarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
@@ -79,22 +84,16 @@ RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission rad
 **Note**: The order of packages is important. See [https://swizzin.ltd/guides/advanced-setup](https://swizzin.ltd/guides/advanced-setup).
 
 #### Docker Compose Configuration
-Edit the `docker-compose.yml` to set up necessary configurations for Swizzin (change username if needed):
+
+Edit the `docker-compose.yml` to set up necessary configurations for Swizzin (optional):
 
 ```yml
 volumes:
-  - ./data/downloads:/home/seedbox/transmission/downloads
-  - ./data/torrents:/home/seedbox/transmission/watch
+    - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
+    - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
 ```
 
-Edit the `docker-compose.yml` to set up necessary configurations for Joal (prefix and secret token):
-
-```bash
-# Joal Settings
-command: ["--joal-conf=/data", "--spring.main.web-environment=true", "--server.port=8003", "--joal.ui.path.prefix=OP", "--joal.ui.secret-token=SC"]
-```
-
-Edit the `config.json` to set up necessary configurations for Joal:
+Edit the `config.json` to set up necessary configurations for Joal (optional):
 
 ```json
 {
@@ -114,22 +113,23 @@ Current configuration uses Private Internet Access VPN. You can change the provi
 Set your account settings in `docker-compose.yml`:
 
 ```yml
-  - OPENVPN_USER=pXXXXXX
-  - OPENVPN_PASSWORD=password
+  - VPN_SERVICE_PROVIDER=private internet access
+  - OPENVPN_USER=${OPENVPN_USER}
+  - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+  - SERVER_REGIONS=DE Berlin
+  - PORT_FORWARD_ONLY=true
+  - VPN_PORT_FORWARDING=on
+  - VPN_PORT_FORWARDING_PROVIDER="private internet access"
+  - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
+  - HTTPPROXY=on
 ```
 
-### 4. Build Swizzin Docker Image
-
-```bash
-docker build -t swizzin .
-```
-
-### 5. Build and Start the Services
+### 4. Build and Start the Services
 
 Use Docker Compose to build and start the services:
 
 ```bash
-docker-compose up -d
+docker-compose up --build
 ```
 
 This will:
@@ -138,11 +138,11 @@ This will:
 - Launch Resilio Sync alongside it.
 - Setup VPN configuration.
 
-### 6. Access the Services
+### 5. Access the Services
 
 - **Swizzin Web Panel**: [http://your-server-ip](http://your-server-ip)
   ![image](swizzin.PNG)
-- **Joal Web UI**: [http://your-server-ip/OP/ui:8003](http://your-server-ip/OP/ui:8003)
+- **Joal Web UI**: [http://your-server-ip/{JOAL_PREFIX}/ui:8003](http://your-server-ip/{JOAL_PREFIX}/ui:8003)
   **To configure Joal UI, click on `change connection settings` and click `save`.**
   ![image](joal_conf.PNG)
 - **Resilio Sync Web UI**: [http://your-server-ip:8888](http://your-server-ip:8888)
@@ -171,7 +171,7 @@ Example `joal-config.json`:
 ```
 
 ### Resilio Sync Configuration
-You can customize Resilio Sync by editing the `./data/sync` directory and configuring folders and peers using its Web UI.
+You can customize Resilio Sync by editing the `./rdata` directory and configuring folders and peers using its Web UI.
 
 ---
 
@@ -187,7 +187,7 @@ You can customize Resilio Sync by editing the `./data/sync` directory and config
 
 ### Planned Enhancements
 
-- [ ] **Settings**: Add some Joal settings in configurable env variables.
+- [X] **Settings**: Add some Joal settings in configurable env variables.
 - [x] **Network**: Add VPN integration.
 - [x] **Docker**: Change Ubuntu to Debian.
 - [ ] **SSL Integration**: Automate HTTPS setup using Let's Encrypt or other SSL providers.

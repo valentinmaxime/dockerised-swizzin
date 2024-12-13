@@ -9,8 +9,8 @@ services:
       - ./gluetun:/gluetun
     environment:
       - VPN_SERVICE_PROVIDER=private internet access
-      - OPENVPN_USER=xxx
-      - OPENVPN_PASSWORD=xxx
+      - OPENVPN_USER=${OPENVPN_USER}
+      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
       - SERVER_REGIONS=DE Berlin
       - PORT_FORWARD_ONLY=true
       - VPN_PORT_FORWARDING=on
@@ -26,20 +26,27 @@ services:
       - "443:443" # https port
   swizzin:
     image: swizzin
+    build:
+      context: .
+      args:
+        - MY_VARIABLE=${MY_VARIABLE}
+        - TERM=${TERM}
+        - SEEDBOX_USER=${SEEDBOX_USER}
+        - SEEDBOX_PASS=${SEEDBOX_PASS}
     container_name: debian_ssh_container
     restart: unless-stopped
     privileged: true
     network_mode: service:vpn
     volumes:
-      - ./data/downloads:/home/seedbox/transmission/downloads
-      - ./data/torrents:/home/seedbox/transmission/watch
+      - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
+      - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
   joal:
     image: anthonyraymond/joal
     container_name: joal
     restart: unless-stopped
     volumes:
       - ./joal:/data
-    command: ["--joal-conf=/data", "--spring.main.web-environment=true", "--server.port=8003", "--joal.ui.path.prefix=OP", "--joal.ui.secret-token=SC"]
+    command: ["--joal-conf=/data", "--spring.main.web-environment=true", "--server.port=8003", "--joal.ui.path.prefix=${JOAL_PREFIX}", "--joal.ui.secret-token=${JOAL_SECRET}"]
     network_mode: service:vpn
   resilio-sync:
     image: lscr.io/linuxserver/resilio-sync:latest
@@ -52,7 +59,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - ./rdownloads:/downloads
+      - ./data/downloads:/downloads
       - ./rdata:/sync
     restart: unless-stopped
 networks:
