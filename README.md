@@ -75,37 +75,6 @@ JOAL_PREFIX=OP             # Joal setting
 JOAL_SECRET=SC             # Joal setting
 ```
 
-Change the package list as you want in `Dockerfile`:
-
-```bash
-RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr lidarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
-```
-
-**Note**: The order of packages is important. See [https://swizzin.ltd/guides/advanced-setup](https://swizzin.ltd/guides/advanced-setup).
-
-#### Docker Compose Configuration
-
-Edit the `docker-compose.yml` to set up necessary configurations for Swizzin (optional):
-
-```yml
-volumes:
-    - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
-    - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
-```
-
-Edit the `config.json` to set up necessary configurations for Joal (optional):
-
-```json
-{
-  "minUploadRate": 30,
-  "maxUploadRate": 308,
-  "simultaneousSeed": 5,
-  "client": "utorrent-3.5.0_43916.client",
-  "keepTorrentWithZeroLeechers": true
-}
-```
-
-
 ### 3. Setup VPN Container
 
 Current configuration uses Private Internet Access VPN. You can change the provider (see [Gluetun Wiki](https://github.com/qdm12/gluetun-wiki/tree/main/setup/providers)).
@@ -153,11 +122,29 @@ Resilio Sync is included as Swizzin does not manage it well.
 ### Swizzin Configuration
 Swizzin can be customized to include additional services like qBittorrent, Plex, or Deluge. Modify the Swizzin installation script in `Dockerfile` or extend the Swizzin configuration via the web panel.
 
+```bash
+RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr lidarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
+```
+
+**Note**: The order of packages is important. See [https://swizzin.ltd/guides/advanced-setup](https://swizzin.ltd/guides/advanced-setup).
+
+#### Docker Compose Configuration
+
+Edit the `docker-compose.yml` to set up necessary configurations for Swizzin (optional):
+
+```yml
+volumes:
+    - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
+    - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
+```
+
+
 ### Joal Configuration
 1. Use the `JOAL_CONFIG_URL` environment variable to specify a custom `joal-config.json`.
 2. Place the `joal-config.json` file in `./data/joal` for direct customization.
 
-Example `joal-config.json`:
+
+Edit the `joal-config.json` to set up necessary configurations for Joal (optional):
 
 ```json
 {
@@ -166,6 +153,7 @@ Example `joal-config.json`:
   "files": ["/data/torrents"]
 }
 ```
+
 
 ### Resilio Sync Configuration
 You can customize Resilio Sync by editing the `./rdata` directory and configuring folders and peers using its Web UI.
