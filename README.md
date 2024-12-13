@@ -114,8 +114,6 @@ Set your account settings in `docker-compose.yml`:
 
 ```yml
   - VPN_SERVICE_PROVIDER=private internet access
-  - OPENVPN_USER=${OPENVPN_USER}
-  - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
   - SERVER_REGIONS=DE Berlin
   - PORT_FORWARD_ONLY=true
   - VPN_PORT_FORWARDING=on
