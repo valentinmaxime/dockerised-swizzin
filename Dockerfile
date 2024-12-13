@@ -1,6 +1,5 @@
 FROM debian:bullseye
 
-
 ARG TERM
 ARG SEEDBOX_USER
 ARG SEEDBOX_PASS
@@ -40,7 +39,12 @@ EXPOSE 1-65535
 ENV incomplete_dir_enabled=true
 ENV watch_dir_enabled=true
 
-RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr lidarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
+RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr bazarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
+
+# Install sonarr without systemctl
+RUN sed -i '/systemctl -q daemon-reload/,/echo_progress_done "Loading finished"/ s/^/# /' /etc/swizzin/scripts/install/sonarr.sh
+RUN su
+RUN /etc/swizzin/scripts/box install sonarr
 
 # Activate systemd as PID 1
 CMD ["/lib/systemd/systemd"]

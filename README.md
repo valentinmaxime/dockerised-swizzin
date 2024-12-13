@@ -122,7 +122,7 @@ Resilio Sync is included as Swizzin does not manage it well.
 Swizzin can be customized to include additional services like qBittorrent, Plex, or Deluge. Modify the Swizzin installation script in `Dockerfile` or extend the Swizzin configuration via the web panel.
 
 ```bash
-RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr lidarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
+RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission radarr sonarr --user $SEEDBOX_USER --pass $SEEDBOX_PASS
 ```
 
 **Note**: The order of packages is important. See [https://swizzin.ltd/guides/advanced-setup](https://swizzin.ltd/guides/advanced-setup).
