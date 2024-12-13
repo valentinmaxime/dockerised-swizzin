@@ -62,7 +62,6 @@ cd docker-swizzin-joal
 
 ### 2. Configure Environment Variables and Docker
 
-#### Swizzin Configuration
 Edit the `.env` file to set up necessary configurations for docker compose:
 
 ```bash
