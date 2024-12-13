@@ -143,8 +143,7 @@ This will:
 - **Joal Web UI**: [http://your-server-ip/{JOAL_PREFIX}/ui:8003](http://your-server-ip/{JOAL_PREFIX}/ui:8003)
   **To configure Joal UI, click on `change connection settings` and click `save`.**
   ![image](joal_conf.PNG)
-- **Resilio Sync Web UI**: [http://your-server-ip:8888](http://your-server-ip:8888)
-- **Resilio Sync** [http://your-server-ip:8888](http://your-server-ip:8888)
+- **Resilio Sync Web UI** [http://your-server-ip:8888](http://your-server-ip:8888)
 Resilio Sync is included as Swizzin does not manage it well.
 
 ---
