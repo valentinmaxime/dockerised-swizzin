@@ -6,7 +6,7 @@
   <SslPort>9898</SslPort>
   <EnableSsl>False</EnableSsl>
   <LaunchBrowser>False</LaunchBrowser>
-  <ApiKey>f6afaaa378d54188a3e892231c1068f9</ApiKey>
+  <ApiKey></ApiKey>
   <AuthenticationMethod>None</AuthenticationMethod>
   <UrlBase>sonarr</UrlBase>
   <Branch>main</Branch>
