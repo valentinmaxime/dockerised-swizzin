@@ -1,16 +1,13 @@
 <Config>
-<BindAddress>*</BindAddress>
-<Port>8989</Port>
-<SslPort>9898</SslPort>
-<EnableSsl>False</EnableSsl>
-<LaunchBrowser>True</LaunchBrowser>
-<ApiKey></ApiKey>
-<AuthenticationMethod>None</AuthenticationMethod>
-<AuthenticationRequired>Enabled</AuthenticationRequired>
-<Branch>main</Branch>
-<LogLevel>debug</LogLevel>
-<SslCertPath/>
-<SslCertPassword/>
-<UrlBase/>
-<InstanceName>Sonarr</InstanceName>
+  <LogLevel>info</LogLevel>
+  <UpdateMechanism>BuiltIn</UpdateMechanism>
+  <BindAddress>127.0.0.1</BindAddress>
+  <Port>8989</Port>
+  <SslPort>9898</SslPort>
+  <EnableSsl>False</EnableSsl>
+  <LaunchBrowser>False</LaunchBrowser>
+  <ApiKey></ApiKey>
+  <AuthenticationMethod>None</AuthenticationMethod>
+  <UrlBase>radarr</UrlBase>
+  <Branch>master</Branch>
 </Config>
