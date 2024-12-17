@@ -29,7 +29,6 @@ services:
     build:
       context: .
       args:
-        - MY_VARIABLE=${MY_VARIABLE}
         - TERM=${TERM}
         - SEEDBOX_USER=${SEEDBOX_USER}
         - SEEDBOX_PASS=${SEEDBOX_PASS}
@@ -37,9 +36,14 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: service:vpn
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Etc/UTC
     volumes:
       - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
       - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
+      - ./config:/home/${SEEDBOX_USER}/.config
   joal:
     image: anthonyraymond/joal
     container_name: joal
@@ -59,8 +63,10 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - ./data/downloads:/downloads
+      - ./data/downloads:/sync/downloads
       - ./rdata:/sync
+      - ./config/resilio-sync/config:/config
+
     restart: unless-stopped
 networks:
   mynetwork:
