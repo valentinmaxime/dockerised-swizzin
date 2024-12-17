@@ -45,14 +45,4 @@ RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission rad
 RUN sed -i '/while ! curl/,/done/d' /etc/swizzin/scripts/install/sonarr.sh
 RUN /etc/swizzin/scripts/box install sonarr
 
-COPY startup.sh /usr/local/bin/startup.sh
-RUN chmod +x /usr/local/bin/startup.sh
-
-RUN mkdir /home/Jackett/
-RUN mkdir /home/Radarr/
-RUN mkdir /home/Sonarr/
-RUN mv /home/$SEEDBOX_USER/.config/Jackett/ServerConfig.json /home/Jackett/ServerConfig.json
-RUN mv /home/$SEEDBOX_USER/.config/Radarr/config.xml /home/Radarr/config.xml
-RUN mv /home/$SEEDBOX_USER/.config/Sonarr/config.xml /home/Sonarr/config.xml
-
-CMD ["/usr/local/bin/startup.sh"]
+CMD ["/lib/systemd/systemd"]
