@@ -43,6 +43,10 @@ See docs: [https://swizzin.ltd/getting-started](https://swizzin.ltd/getting-star
         └── 📁clients
         └── 📁torrents
         └── config.json
+    └── 📁config
+        └── 📁Jackett
+        └── 📁Radarr
+        └── 📁Sonarr
     └── .env
     └── docker-compose.yml
     └── Dockerfile
