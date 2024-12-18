@@ -43,10 +43,6 @@ See docs: [https://swizzin.ltd/getting-started](https://swizzin.ltd/getting-star
         └── 📁clients
         └── 📁torrents
         └── config.json
-    └── 📁config
-        └── 📁Jackett
-        └── 📁Radarr
-        └── 📁Sonarr
     └── .env
     └── docker-compose.yml
     └── Dockerfile
@@ -131,6 +127,10 @@ RUN curl -sL git.io/swizzin | bash -s -- --unattend nginx panel transmission rad
 
 **Note**: The order of packages is important. See [https://swizzin.ltd/guides/advanced-setup](https://swizzin.ltd/guides/advanced-setup).
 
+### Swizzin Jackett Configuration
+
+In order to connect Jackett with other trackers, you can folow this doc : https://swizzin.ltd/applications/jackett#connect-to-other-clients.
+
 #### Docker Compose Configuration
 
 Edit the `docker-compose.yml` to set up necessary configurations for Swizzin (optional):
@@ -139,6 +139,7 @@ Edit the `docker-compose.yml` to set up necessary configurations for Swizzin (op
 volumes:
     - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
     - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
+    - ./config:/home/${SEEDBOX_USER}/.config
 ```
 
 

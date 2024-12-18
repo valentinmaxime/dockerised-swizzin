@@ -10,4 +10,8 @@
   <AuthenticationMethod>None</AuthenticationMethod>
   <UrlBase>radarr</UrlBase>
   <Branch>master</Branch>
+  <AuthenticationRequired>Enabled</AuthenticationRequired>
+  <InstanceName>Radarr</InstanceName>
+  <SslCertPath></SslCertPath>
+  <SslCertPassword></SslCertPassword>
 </Config>
