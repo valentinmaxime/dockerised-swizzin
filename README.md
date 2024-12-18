@@ -39,6 +39,14 @@ See docs: [https://swizzin.ltd/getting-started](https://swizzin.ltd/getting-star
 
 ```
 └── 📁seedbox
+    └── 📁config
+        └── 📁Jackett
+            └── ServerConfig.json
+            └── ygg-api.yml
+        └── 📁Radarr
+            └── config.xml
+        └── 📁Sonarr
+            └── config.xml
     └── 📁joal
         └── 📁clients
         └── 📁torrents
