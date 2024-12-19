@@ -47,6 +47,10 @@ See docs: [https://swizzin.ltd/getting-started](https://swizzin.ltd/getting-star
             └── config.xml
         └── 📁Sonarr
             └── config.xml
+    └── 📁swizzin
+        └── .btsync.lock
+        └── .joal.lock
+        └── profiles.py
     └── 📁joal
         └── 📁clients
         └── 📁torrents
