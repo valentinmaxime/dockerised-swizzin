@@ -44,6 +44,9 @@ services:
       - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
       - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
       - ./config:/home/${SEEDBOX_USER}/.config
+      - ./swizzin/profiles.py:/opt/swizzin/core/profiles.py
+      - ./swizzin/.btsync.lock:/install/.btsync.lock
+      - ./swizzin/.joal.lock:/install/.joal.lock
       - ./config/Jackett/ygg-api.yml:/home/${SEEDBOX_USER}/Jackett/Definitions/ygg-api.yml
   joal:
     image: anthonyraymond/joal
