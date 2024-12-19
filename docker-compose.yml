@@ -43,6 +43,7 @@ services:
     volumes:
       - ./data/downloads:/home/${SEEDBOX_USER}/transmission/downloads
       - ./data/torrents:/home/${SEEDBOX_USER}/transmission/watch
+      - ./data/incomplete:/home/${SEEDBOX_USER}/transmission/incomplete
       - ./config:/home/${SEEDBOX_USER}/.config
       - ./swizzin/profiles.py:/opt/swizzin/core/profiles.py
       - ./swizzin/.btsync.lock:/install/.btsync.lock
