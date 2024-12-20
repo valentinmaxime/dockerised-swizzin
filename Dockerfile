@@ -28,10 +28,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir /var/run/sshd
 
-# Configure systemd
-ENV container docker
-STOPSIGNAL SIGRTMIN+3
-
 # Expose necessary ports
 EXPOSE 1-65535
 
