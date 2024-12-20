@@ -17,6 +17,9 @@ services:
       - VPN_PORT_FORWARDING_PROVIDER="private internet access"
       - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
       - HTTPPROXY=on
+    # FOR LINUX HOSTS ONLY
+    #devices:
+    #  - /dev/net/tun:/dev/net/tun
     networks:
       - mynetwork
     ports:
